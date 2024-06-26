@@ -48,7 +48,7 @@ return new class extends Migration
 
         Schema::create('cities', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('country_id')->constrained()->onDelete('cascade');
+            $table->foreignId('country_id')->constrained('countries')->onDelete('cascade');
             $table->string('name');
             $table->string('slug');
             $table->boolean('status')->default(true);
@@ -57,19 +57,10 @@ return new class extends Migration
 
         Schema::create('cemeteries', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('country_id')->constrained()->onDelete('cascade');
+            $table->foreignId('country_id')->constrained('countries')->onDelete('cascade');
             $table->string('name');
             $table->string('slug');
             $table->boolean('status')->default(true);
-            $table->timestamps();
-        });
-
-        Schema::create('payments', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('candle_id')->constrained()->onDelete('cascade');
-            $table->string('transactionid');
-            $table->decimal('amount', 8, 2);
-            $table->boolean('status')->default(false);
             $table->timestamps();
         });
 
@@ -78,13 +69,13 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('row')->nullable();
-            $table->date('birth_date');
-            $table->date('death_date');
+            $table->timestamp('birth_date');
+            $table->timestamp('death_date');
             $table->enum('gender', ['male', 'female']);
             $table->string('avatar');
-            $table->foreignId('cemetery_id')->constrained()->onDelete('cascade');
-            $table->foreignId('country_id')->constrained()->onDelete('cascade');
-            $table->foreignId('city_id')->constrained()->onDelete('cascade');
+            $table->foreignId('cemetery_id')->constrained('cemeteries')->onDelete('cascade');
+            $table->foreignId('country_id')->constrained('countries')->onDelete('cascade');
+            $table->foreignId('city_id')->constrained('cities')->onDelete('cascade');
             $table->boolean('payment')->default(false);
             $table->boolean('status')->default(true);
             $table->timestamps();
@@ -92,8 +83,17 @@ return new class extends Migration
 
         Schema::create('candles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('people_id')->constrained()->onDelete('cascade');
+            $table->foreignId('people_id')->constrained('peoples')->onDelete('cascade');
             $table->text('message');
+            $table->timestamps();
+        });
+
+        Schema::create('payments', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('candle_id')->constrained('candles')->onDelete('cascade');
+            $table->string('transactionid');
+            $table->decimal('amount', 8, 2);
+            $table->boolean('status')->default(false);
             $table->timestamps();
         });
     }
@@ -104,5 +104,13 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('users');
+        Schema::dropIfExists('settings');
+        Schema::dropIfExists('countries');
+        Schema::dropIfExists('sectors');
+        Schema::dropIfExists('cities');
+        Schema::dropIfExists('cemeteries');
+        Schema::dropIfExists('peoples');
+        Schema::dropIfExists('candles');
+        Schema::dropIfExists('payments');
     }
 };

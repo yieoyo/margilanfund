@@ -5,11 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Sectors extends Model
+class Sector extends Model
 {
     use HasFactory;
 
-    protected $filable = 'sectors';
+    protected $table = 'sectors';
 
-    protected $fillable = ['name', 'status'];
+    protected $fillable = [
+        'name',
+        'status'
+    ];
 }

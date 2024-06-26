@@ -9,9 +9,14 @@ class Payment extends Model
 {
     use HasFactory;
 
-    protected $filable = 'payments';
+    protected $table = 'payments';
 
-    protected $fillable = ['candle_id', 'transactionid', 'amount', 'status'];
+    protected $fillable = [
+        'candle_id',
+        'transactionid',
+        'amount',
+        'status'
+    ];
 
     public function candle()
     {

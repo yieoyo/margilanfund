@@ -9,13 +9,20 @@ class Candle extends Model
 {
     use HasFactory;
 
-    protected $filable = 'candles';
+    protected $table = 'candles';
 
-    protected $fillable = ['people_id', 'message'];
+    protected $fillable = [
+        'people_id',
+        'message'
+    ];
 
     public function people()
     {
         return $this->belongsTo(People::class);
     }
 
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
 }
