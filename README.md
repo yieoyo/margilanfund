@@ -2,7 +2,7 @@
 <a href="https://margilanfund.org/">Production URL</a>
 
 # Admin - CRUD
-Country, City, Cemetery, Sector, People, Settings
+Country, City, Cemetery, Sector, Row, People, Settings
 
 
 # Logic:
