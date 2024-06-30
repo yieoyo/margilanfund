@@ -34,20 +34,24 @@ City:
 country_id, name, slug, status
 
 Cemetery:
-country_id, name, slug, status
+city_id, name, slug, status
+
+
+Sector:
+cemetry_id, name, slug, status
+
+Row:
+sector_id, name, slug, status
+
+People:
+first_name, last_name, row_id, birth_date(timestamp for only date month year), death_date(timestamp for only date month year), gender, avatar, payment(boolean, default: true), status
+
 
 Candle:
 people_id, message
 
 Payment:
 candle_id, transaction, amount, status
-
-Sectors:
-name, slug, status
-
-
-People:
-first_name, last_name, row(nullable), birth_date(timestamp for only date month year), death_date(timestamp for only date month year), gender, avatar, cemetry_id, country_id, city_id, payment(boolean, default: true), status
 
 
 # Model Requirements:
